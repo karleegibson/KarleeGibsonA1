@@ -32,12 +32,13 @@ def main():
     lines = items_file.readlines()
     print("{} items loaded from items.csv".format(len(lines)))
     menu = choose_menu_option()
-    while menu != "Q":
-        if menu == "R":
-            items_reader = csv.reader(items_file)
-            for row in items_reader:
-                print(row)
-        menu = choose_menu_option()
+    # while menu != "Q":
+    if menu == "R":
+        items = load_items()
+        items_reader = csv.reader(items)
+        for item in items_reader:
+            print(item)
+        #menu = choose_menu_option()
 
 
 def choose_menu_option():
@@ -54,8 +55,15 @@ def choose_menu_option():
         print(MENU)
 
 
-# def list_required_items():
+#def list_required_items(items_file):
+    #items_reader = csv.reader(items_file)
+    #for row in items_reader:
+        #print(row)
 
+
+def load_items():
+    items_in_text = items_file.readlines()
+    return items_in_text
 
 
 main()
