@@ -31,6 +31,31 @@ def main():
     print("Shopping List 1.0 - by Karlee Gibson")
     lines = items_file.readlines()
     print("{} items loaded from items.csv".format(len(lines)))
+    menu = choose_menu_option()
+    while menu != "Q":
+        if menu == "R":
+            items_reader = csv.reader(items_file)
+            for row in items_reader:
+                print(row)
+        menu = choose_menu_option()
+
+
+def choose_menu_option():
     print(MENU)
+    try:
+        menu_choice = input(">>>").upper()
+        while menu_choice not in ['R', 'C', 'A', 'M', 'Q']:
+            print("Invalid menu choice")
+            print(MENU)
+            menu_choice = input(">>>").upper()
+        return menu_choice
+    except ValueError:
+        print("Invalid menu choice")
+        print(MENU)
+
+
+# def list_required_items():
+
+
 
 main()
