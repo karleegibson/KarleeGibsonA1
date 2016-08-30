@@ -21,24 +21,23 @@ function complete_an_item()
 """
 import csv
 
-items_file = open('items.csv', 'r')
-
 MENU = "Menu: \nR - List required items \nC - List completed items \nA - Add new item \nM - Mark an item as " \
        "completed \nQ - Quit"
 
 
 def main():
     print("Shopping List 1.0 - by Karlee Gibson")
-    lines = items_file.readlines()
-    print("{} items loaded from items.csv".format(len(lines)))
+    items = load_items()
+    print("{} items loaded from items.csv".format(len(items)))
     menu = choose_menu_option()
-    # while menu != "Q":
-    if menu == "R":
-        items = load_items()
-        items_reader = csv.reader(items)
-        for item in items_reader:
-            print(item)
-        #menu = choose_menu_option()
+    while menu != "Q":
+        if menu == "R":
+            print("Required items:")
+            items = load_items()
+            for item in items:
+                item = item.split(',')
+                print("{} {} ({})".format(item[0], item[1], item[2]))
+        menu = choose_menu_option()
 
 
 def choose_menu_option():
@@ -62,6 +61,7 @@ def choose_menu_option():
 
 
 def load_items():
+    items_file = open('items.csv', 'r')
     items_in_text = items_file.readlines()
     return items_in_text
 
