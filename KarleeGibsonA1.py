@@ -23,6 +23,9 @@ import csv
 
 MENU = "Menu: \nR - List required items \nC - List completed items \nA - Add new item \nM - Mark an item as " \
        "completed \nQ - Quit"
+COFFEE_BEANS = 40.00
+FISH_FINGERS = 12.95
+METAL_DETECTOR = 42.50
 
 
 def main():
@@ -33,7 +36,18 @@ def main():
     while menu != "Q":
         if menu == "R":
             print("Required items: ")
-            #required_items_list = format_required_items(list_of_items)
+            required_items = load_items()
+            count = 0
+            for item in required_items:
+                print("{}. {}".format(count, item))
+                count += 1
+        menu = choose_menu_option()
+        if menu == "C":
+            completed_items = load_completed_items(list_of_items)
+            if completed_items == "0":
+                print("No completed items")
+            else:
+                print(completed_items)
         menu = choose_menu_option()
 
 
@@ -62,9 +76,31 @@ def load_items():
         items.append(item)
     return items
 
-def format_required_items(list_of_items):
-    for item in list_of_items:
 
+def load_completed_items(list_of_items):
+    completed_items_list = []
+    for item in list_of_items:
+        if "c" in item:
+            completed_items_list.append(item)
+        else:
+            completed_items_list = ["0"]
+    return completed_items_list
+
+
+# def calculate_expected_price():
+
+def add_new_item():
+    try:
+        item_name = input("Item name: ")
+        item_price = float(input("Price: "))
+        item_priority = int(input("Priority: "))
+        required_items.append(item_name, item_price, item_priority)
+    except NameError:
+        print("Input can not be blank")
+
+
+
+# def complete_an_item():
 
 
 main()
