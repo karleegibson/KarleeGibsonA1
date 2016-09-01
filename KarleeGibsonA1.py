@@ -27,16 +27,13 @@ MENU = "Menu: \nR - List required items \nC - List completed items \nA - Add new
 
 def main():
     print("Shopping List 1.0 - by Karlee Gibson")
-    items = load_items()
-    print("{} items loaded from items.csv".format(len(items)))
+    list_of_items = load_items()
+    print("{} items loaded from items.csv".format(len(list_of_items)))
     menu = choose_menu_option()
     while menu != "Q":
         if menu == "R":
-            print("Required items:")
-            items = load_items()
-            for item in items:
-                item = item.split(',')
-                print("{} {} ({})".format(item[0], item[1], item[2]))
+            print("Required items: ")
+            #required_items_list = format_required_items(list_of_items)
         menu = choose_menu_option()
 
 
@@ -54,16 +51,20 @@ def choose_menu_option():
         print(MENU)
 
 
-#def list_required_items(items_file):
-    #items_reader = csv.reader(items_file)
-    #for row in items_reader:
-        #print(row)
-
-
 def load_items():
     items_file = open('items.csv', 'r')
     items_in_text = items_file.readlines()
-    return items_in_text
+    items = []
+    for item in items_in_text:
+        item = item.strip().split(',')
+        item[1] = float(item[1])
+        item[2] = int(item[2])
+        items.append(item)
+    return items
+
+def format_required_items(list_of_items):
+    for item in list_of_items:
+
 
 
 main()
