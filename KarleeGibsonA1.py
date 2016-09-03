@@ -67,7 +67,11 @@ def main():
                 count += 1
             expected_price_of_items = calculate_expected_price(required_items)
             print("Total expected price for {} items: ${}".format(len(required_items), expected_price_of_items))
-            item_to_be_completed =
+            item_to_be_completed = complete_an_item(required_items)
+            for item in list_of_items:
+                if item_to_be_completed in item:
+                    item[3] = 'c'
+            print("{} marked as completed".format(item_to_be_completed[0]))
             menu = choose_menu_option()
 
 
@@ -132,9 +136,8 @@ def add_new_item(list_of_items):
             item_priority = int(input("Priority: "))
         completion = 'r'
         print("{}, ${} (priority {}) added to shopping list".format(item_name, item_price, item_priority))
-        list_of_items.append(item_name, item_price, item_priority, completion)
-        print("Invalid input; enter a valid number")
-    except TypeError:
+        list_of_items.append((item_name, item_price, item_priority, completion))
+    except ValueError:
         print("Invalid input; enter a valid number")
     except "":
         print("Input can not be blank")
@@ -142,8 +145,20 @@ def add_new_item(list_of_items):
 
 
 def complete_an_item(required_items):
-    item_to_complete = (input("Enter the number of an item to mark as completed"))
-
+    total = 0
+    for item in required_items:
+        total += 1
+    try:
+        print("Enter the number of an item to mark as completed")
+        item_number = int(input(">>>"))
+        while item_number not in range(0, total + 1):
+            print("Invalid item number")
+            item_number = int(input("Enter the number of an item to mark as completed"))
+        item_to_complete = required_items[item_number]
+        item_to_complete[3] = 'c'
+        return item_to_complete
+    except ValueError:
+        print("Invalid input; enter a number")
 
 
 main()
