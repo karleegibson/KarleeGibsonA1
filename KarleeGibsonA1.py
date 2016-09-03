@@ -37,7 +37,7 @@ def main():
 
         if menu == "R":
             print("Required items: ")
-            required_items = load_items()
+            required_items = load_required_items(list_of_items)
             count = 0
             for item in required_items:
                 print("{}. {:18} ${:6.2f} ({})".format(count, item[0], item[1], item[2]))
@@ -56,9 +56,18 @@ def main():
 
         elif menu == "A":
             new_item = add_new_item(list_of_items)
+            menu = choose_menu_option()
 
         elif menu == "M":
-            print("hello")
+            print("Required items: ")
+            required_items = load_required_items(list_of_items)
+            count = 0
+            for item in required_items:
+                print("{}. {:18} ${:6.2f} ({})".format(count, item[0], item[1], item[2]))
+                count += 1
+            expected_price_of_items = calculate_expected_price(required_items)
+            print("Total expected price for {} items: ${}".format(len(required_items), expected_price_of_items))
+            item_to_be_completed =
             menu = choose_menu_option()
 
 
@@ -88,6 +97,14 @@ def load_items():
     return items
 
 
+def load_required_items(list_of_items):
+    required_items_list = []
+    for item in list_of_items:
+        if item[3] == 'r':
+            required_items_list.append(item)
+    return required_items_list
+
+
 def load_completed_items(list_of_items):
     completed_items_list = []
     for item in list_of_items:
@@ -110,13 +127,23 @@ def add_new_item(list_of_items):
         item_name = input("Item name: ")
         item_price = float(input("Price: "))
         item_priority = int(input("Priority: "))
-
-        required_items.append(item_name, item_price, item_priority)
-    except NameError:
+        while item_priority not in [1, 2, 3]:
+            print("Priority must be 1, 2 or 3")
+            item_priority = int(input("Priority: "))
+        completion = 'r'
+        print("{}, ${} (priority {}) added to shopping list".format(item_name, item_price, item_priority))
+        list_of_items.append(item_name, item_price, item_priority, completion)
+        print("Invalid input; enter a valid number")
+    except TypeError:
+        print("Invalid input; enter a valid number")
+    except "":
         print("Input can not be blank")
+    return list_of_items
 
 
-# def complete_an_item():
+def complete_an_item(required_items):
+    item_to_complete = (input("Enter the number of an item to mark as completed"))
+
 
 
 main()
