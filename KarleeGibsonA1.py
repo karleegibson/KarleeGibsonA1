@@ -34,21 +34,32 @@ def main():
     print("{} items loaded from items.csv".format(len(list_of_items)))
     menu = choose_menu_option()
     while menu != "Q":
+
         if menu == "R":
             print("Required items: ")
             required_items = load_items()
             count = 0
             for item in required_items:
-                print("{}. {}".format(count, item))
+                print("{}. {:18} ${:6.2f} ({})".format(count, item[0], item[1], item[2]))
                 count += 1
-        menu = choose_menu_option()
-        if menu == "C":
+            expected_price_of_items = calculate_expected_price(required_items)
+            print("Total expected price for {} items: ${}".format(len(required_items), expected_price_of_items))
+            menu = choose_menu_option()
+
+        elif menu == "C":
             completed_items = load_completed_items(list_of_items)
-            if completed_items == "0":
+            if completed_items == '':
                 print("No completed items")
             else:
                 print(completed_items)
-        menu = choose_menu_option()
+            menu = choose_menu_option()
+
+        elif menu == "A":
+            new_item = add_new_item(list_of_items)
+
+        elif menu == "M":
+            print("hello")
+            menu = choose_menu_option()
 
 
 def choose_menu_option():
@@ -80,24 +91,29 @@ def load_items():
 def load_completed_items(list_of_items):
     completed_items_list = []
     for item in list_of_items:
-        if "c" in item:
+        if item[3] == 'c':
             completed_items_list.append(item)
         else:
-            completed_items_list = ["0"]
+            completed_items_list = ''
     return completed_items_list
 
 
-# def calculate_expected_price():
+def calculate_expected_price(required_items):
+    expected_price = 0.00
+    for item in required_items:
+        expected_price += item[1]
+    return expected_price
 
-def add_new_item():
+
+def add_new_item(list_of_items):
     try:
         item_name = input("Item name: ")
         item_price = float(input("Price: "))
         item_priority = int(input("Priority: "))
+
         required_items.append(item_name, item_price, item_priority)
     except NameError:
         print("Input can not be blank")
-
 
 
 # def complete_an_item():
