@@ -23,9 +23,6 @@ import csv
 
 MENU = "Menu: \nR - List required items \nC - List completed items \nA - Add new item \nM - Mark an item as " \
        "completed \nQ - Quit"
-COFFEE_BEANS = 40.00
-FISH_FINGERS = 12.95
-METAL_DETECTOR = 42.50
 
 
 def main():
@@ -51,7 +48,11 @@ def main():
             if completed_items == '':
                 print("No completed items")
             else:
-                print(completed_items)
+                print("Completed items: ")
+                count = 0
+                for item in completed_items:
+                    print("{}. {:18} ${:6.2f} ({})".format(count, item[0], item[1], item[2]))
+                    count += 1
             menu = choose_menu_option()
 
         elif menu == "A":
@@ -68,9 +69,8 @@ def main():
             expected_price_of_items = calculate_expected_price(required_items)
             print("Total expected price for {} items: ${}".format(len(required_items), expected_price_of_items))
             item_to_be_completed = complete_an_item(required_items)
-            for item in list_of_items:
-                if item_to_be_completed in item:
-                    item[3] = 'c'
+            for item_to_be_completed in list_of_items:
+                list_of_items[(item_to_be_completed[3])] = 'c'
             print("{} marked as completed".format(item_to_be_completed[0]))
             menu = choose_menu_option()
 
@@ -112,7 +112,7 @@ def load_required_items(list_of_items):
 def load_completed_items(list_of_items):
     completed_items_list = []
     for item in list_of_items:
-        if item[3] == 'c':
+        if item[3] in list_of_items != 'r':
             completed_items_list.append(item)
         else:
             completed_items_list = ''
@@ -155,10 +155,20 @@ def complete_an_item(required_items):
             print("Invalid item number")
             item_number = int(input("Enter the number of an item to mark as completed"))
         item_to_complete = required_items[item_number]
-        item_to_complete[3] = 'c'
         return item_to_complete
+
     except ValueError:
         print("Invalid input; enter a number")
+
+
+        # def update_list_of_items(item_to_be_completed, list_of_items):
+        # for item_to_be_completed in list_of_items:
+        # item_to_be_completed = item_to_complete.strip().split(',')
+        # item_to_be_completed[1] = float(item[1])
+        # item_to_be_completed[2] = int(item[2])
+        # item_to_be_completed[3] = 'c'
+        # list_of_items.append(item_to_be_completed)
+        # return list_of_items
 
 
 main()
