@@ -158,10 +158,10 @@ def complete_an_item(required_items):
             print("Invalid item number")
             item_number = int(input("Enter the number of an item to mark as completed"))
         item_to_complete = required_items[item_number]
-        # item_to_complete[3] = 'c'
         return item_to_complete
-
     except ValueError:
+        print("Invalid input; enter a number")
+    except TypeError:
         print("Invalid input; enter a number")
 
 
