@@ -74,7 +74,7 @@ def main():
                 item_to_be_completed[3] = 'c'
             menu = choose_menu_option()
 
-    shopping_list = save_items(list_of_items)
+    updated_list = save_items(list_of_items)
     print("{} items saved to items.csv".format(len(list_of_items)))
     print("Have a nice day :)")
 
@@ -169,9 +169,8 @@ def save_items(list_of_items):
     items_file = open('items.csv', 'w')
     items_writer = csv.writer(items_file)
     for item in list_of_items:
-        items_writer.writelines(item)
+        items_writer.writerow(item)
     items_file.close()
-    return
 
 
 main()
