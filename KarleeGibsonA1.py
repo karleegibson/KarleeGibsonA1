@@ -4,17 +4,32 @@
     Link to GitHub: https://github.com/karleegibson/KarleeGibsonA1
 
 Pseudocode:
+
 function load_items()
-    display required_items_list
-    display menu choice
-    get menu choice
+    open "items.csv" as items_file for reading
+    return a single list of all the lines from items_file and assign to items_in_text
+    items = empty list
+    for item in items_in_text
+        item = strip item on whitespace and split item on commas
+        item[1] = item[1] converted to float
+        item[2] = item[2] converted to integer
+        add item to items
+    close items_file
+    return items
 
 
-function complete_an_item()
-    display required_items_list
-    get number of item to mark
-    display item marked as completed message
-
+function complete_an_item(required_items)
+    total = 0
+    for item in required_items
+        total = total + 1
+    display get item number message
+    get item_number
+    repeat while item_number not in range
+        display invalid number message
+        display get item number message
+        get item_number
+    item_to_complete = item with item_number from required_items list
+    return item_to_complete
 
 
 
