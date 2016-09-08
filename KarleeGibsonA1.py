@@ -45,7 +45,7 @@ def main():
 
         elif menu == "C":
             completed_items = load_completed_items(list_of_items)
-            if completed_items == '':
+            if completed_items == []:
                 print("No completed items")
             else:
                 print("Completed items: ")
@@ -73,6 +73,8 @@ def main():
             if item_to_be_completed in list_of_items:
                 item_to_be_completed[3] = 'c'
             menu = choose_menu_option()
+
+    shopping_list = save_items(list_of_items)
     print("{} items saved to items.csv".format(len(list_of_items)))
     print("Have a nice day :)")
 
@@ -115,10 +117,8 @@ def load_required_items(list_of_items):
 def load_completed_items(list_of_items):
     completed_items_list = []
     for item in list_of_items:
-        if item[3] in list_of_items == 'c':
+        if item[3] == 'c':
             completed_items_list.append(item)
-        else:
-            completed_items_list = ''
     return completed_items_list
 
 
@@ -165,12 +165,13 @@ def complete_an_item(required_items):
         print("Invalid input; enter a number")
 
 
-# def save_items(list_of_items):
-    # items_file = open('items.csv', 'w')
-    # items_writer = csv.writer(items_file)
-    # for item in list_of_items:
-        # items_writer.writelines(item)
-    # items_file.close()
+def save_items(list_of_items):
+    items_file = open('items.csv', 'w')
+    items_writer = csv.writer(items_file)
+    for item in list_of_items:
+        items_writer.writelines(item)
+    items_file.close()
+    return
 
 
 main()
