@@ -59,14 +59,17 @@ def main():
     while menu != "Q":
 
         if menu == "R":
-            print("Required items: ")
             required_items = load_required_items(list_of_items)
-            count = 0
-            for item in required_items:
-                print("{}. {:18} ${:6.2f} ({})".format(count, item[0], item[1], item[2]))
-                count += 1
-            expected_price_of_items = calculate_expected_price(required_items)
-            print("Total expected price for {} items: ${}".format(len(required_items), expected_price_of_items))
+            if required_items == []:
+                print("No required items")
+            else:
+                print("Required items: ")
+                count = 0
+                for item in required_items:
+                    print("{}. {:18} ${:6.2f} ({})".format(count, item[0], item[1], item[2]))
+                    count += 1
+                expected_price_of_items = calculate_expected_price(required_items)
+                print("Total expected price for {} items: ${}".format(len(required_items), expected_price_of_items))
             menu = choose_menu_option()
 
         elif menu == "C":
@@ -89,18 +92,21 @@ def main():
             menu = choose_menu_option()
 
         elif menu == "M":
-            print("Required items: ")
             required_items = load_required_items(list_of_items)
-            count = 0
-            for item in required_items:
-                print("{}. {:18} ${:6.2f} ({})".format(count, item[0], item[1], item[2]))
-                count += 1
-            expected_price_of_items = calculate_expected_price(required_items)
-            print("Total expected price for {} items: ${:.2f}".format(len(required_items), expected_price_of_items))
-            item_to_be_completed = complete_an_item(required_items)
-            print("{} marked as completed".format(item_to_be_completed[0]))
-            if item_to_be_completed in list_of_items:
-                item_to_be_completed[3] = 'c'
+            if required_items == []:
+                print("No required items")
+            else:
+                print("Required items: ")
+                count = 0
+                for item in required_items:
+                    print("{}. {:18} ${:6.2f} ({})".format(count, item[0], item[1], item[2]))
+                    count += 1
+                expected_price_of_items = calculate_expected_price(required_items)
+                print("Total expected price for {} items: ${:.2f}".format(len(required_items), expected_price_of_items))
+                item_to_be_completed = complete_an_item(required_items)
+                print("{} marked as completed".format(item_to_be_completed[0]))
+                if item_to_be_completed in list_of_items:
+                    item_to_be_completed[3] = 'c'
             menu = choose_menu_option()
 
     updated_list = save_items(list_of_items)
