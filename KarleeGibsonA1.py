@@ -1,7 +1,7 @@
 """ Name: Karlee Gibson
     Date: 28/08/16
     Brief program details: Shopping List 1.0
-    Link to GitHub:
+    Link to GitHub: https://github.com/karleegibson/KarleeGibsonA1
 
 Pseudocode:
 function load_items()
@@ -163,18 +163,14 @@ def complete_an_item(required_items):
     total = 0
     for item in required_items:
         total += 1
-    try:
+    print("Enter the number of an item to mark as completed")
+    item_number = int(input(">>>"))
+    while item_number not in range(0, total):
+        print("Invalid item number")
         print("Enter the number of an item to mark as completed")
         item_number = int(input(">>>"))
-        while item_number not in range(0, total):
-            print("Invalid item number")
-            item_number = int(input("Enter the number of an item to mark as completed"))
-        item_to_complete = required_items[item_number]
-        return item_to_complete
-    except ValueError:
-        print("Invalid input; enter a number")
-    except TypeError:
-        print("Invalid input; enter a number")
+    item_to_complete = required_items[item_number]
+    return item_to_complete
 
 
 def save_items(list_of_items):
