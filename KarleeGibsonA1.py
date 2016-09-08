@@ -130,20 +130,32 @@ def calculate_expected_price(required_items):
 
 
 def add_new_item(list_of_items):
-    try:
-        item_name = input("Item name: ")
-        item_price = float(input("Price: "))
-        item_priority = int(input("Priority: "))
-        while item_priority not in [1, 2, 3]:
-            print("Priority must be 1, 2 or 3")
-            item_priority = int(input("Priority: "))
-        completion = 'r'
-        print("{}, ${} (priority {}) added to shopping list".format(item_name, item_price, item_priority))
-        list_of_items.append([item_name, item_price, item_priority, completion])
-    except ValueError:
-        print("Invalid input; enter a valid number")
-    except "":
+    item_name = str(input("Item name: "))
+    while item_name == "":
         print("Input can not be blank")
+        item_name = input("Item name: ")
+    valid_input = False
+    while not valid_input:
+        try:
+            item_price = float(input("Price: "))
+            valid_input = True
+        except ValueError:
+            print("Invalid input; enter a valid number")
+            valid_input = False
+    valid_input = False
+    while not valid_input:
+        try:
+            item_priority = int(input("Priority: "))
+            while item_priority not in (1, 2, 3):
+                print("Priority must be 1, 2, 3")
+                item_priority = int(input("Priority: "))
+            valid_input = True
+        except ValueError:
+            print("Invalid input; enter a valid number")
+            valid_input = False
+    completion = 'r'
+    print("{}, ${} (priority {}) added to shopping list".format(item_name, item_price, item_priority))
+    list_of_items.append([item_name, item_price, item_priority, completion])
     return list_of_items
 
 
@@ -154,7 +166,7 @@ def complete_an_item(required_items):
     try:
         print("Enter the number of an item to mark as completed")
         item_number = int(input(">>>"))
-        while item_number not in range(0, total + 1):
+        while item_number not in range(0, total):
             print("Invalid item number")
             item_number = int(input("Enter the number of an item to mark as completed"))
         item_to_complete = required_items[item_number]
